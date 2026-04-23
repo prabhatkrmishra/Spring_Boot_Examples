@@ -1,0 +1,29 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Plans -->
+    <bean id="normalPlan" class="com.example.Cinemaxify.NormalPlan"/>
+    <bean id="premiumPlan" class="com.example.Cinemaxify.PremiumPlan"/>
+
+    <!-- Self -->
+    <bean id="selfNormal" class="com.example.Cinemaxify.Self">
+        <constructor-arg ref="normalPlan"/>
+    </bean>
+
+    <bean id="selfPremium" class="com.example.Cinemaxify.Self">
+        <constructor-arg ref="premiumPlan"/>
+    </bean>
+
+    <!-- Spouse -->
+    <bean id="spouseNormal" class="com.example.Cinemaxify.Spouse">
+        <constructor-arg ref="normalPlan"/>
+    </bean>
+
+    <bean id="spousePremium" class="com.example.Cinemaxify.Spouse">
+        <constructor-arg ref="premiumPlan"/>
+    </bean>
+
+</beans>
