@@ -13,7 +13,7 @@ public class GraduationCeremonyEvent implements CollegeEvent {
     private int count = 0;
     private List<Attendee> eventAttendees = new ArrayList<>();
 
-    private Attendee attendee; // setter injected
+    private Attendee attendee;
 
     @Override
     public void registerStudent(Attendee user) {
@@ -42,5 +42,17 @@ public class GraduationCeremonyEvent implements CollegeEvent {
     @Override
     public void setAttendee(Attendee attendee) {
         this.attendee = attendee;
+    }
+
+    public Attendee getAttendee() {
+        return attendee;
+    }
+
+    public void init() {
+        System.out.println("GraduationCeremonyEvent bean initialized");
+    }
+
+    public void destroy() {
+        System.out.println("GraduationCeremonyEvent bean destroyed");
     }
 }
