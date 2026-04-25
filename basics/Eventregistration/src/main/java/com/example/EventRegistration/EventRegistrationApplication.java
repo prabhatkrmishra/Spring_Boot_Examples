@@ -15,9 +15,11 @@ public class EventRegistrationApplication {
 
         Scanner scanner = new Scanner(System.in);
 
+        College college = context.getBean("college", College.class);
+
         System.out.println("Welcome to the Graduation Ceremony Registration Application");
 
-        CollegeEvent event = context.getBean("event", CollegeEvent.class);
+        CollegeEvent event = college.getEvent();
 
         event.printEventDetails();
 
@@ -53,9 +55,10 @@ public class EventRegistrationApplication {
         System.out.println("No. of attendees registered are: " + event.getAttendeeCount());
         System.out.println("The list of attendees are:");
 
-        for (Attendee a : event.getAllAttendees()) {
-            System.out.println(a.getAttendeeName() + "    Reference id: @"
-                    + Integer.toHexString(a.hashCode()));
+        for (Attendee attendee : event.getAllAttendees()) {
+            int userReferenceLength = attendee.toString().length();
+            System.out.println(attendee.getAttendeeName() + "\t Reference id: "
+                    + attendee.toString().substring(userReferenceLength - 9, userReferenceLength));
         }
 
         context.close();

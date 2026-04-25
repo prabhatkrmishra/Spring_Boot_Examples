@@ -24,4 +24,8 @@ public class StudentAttendee implements Attendee {
     public String getAttendeeName() {
         return name;
     }
+
+    public void init() {
+        System.out.println("StudentAttendee bean initialized");
+    }
 }
