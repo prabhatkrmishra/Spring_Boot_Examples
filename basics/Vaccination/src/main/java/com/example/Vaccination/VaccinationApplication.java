@@ -87,7 +87,9 @@ public class VaccinationApplication {
                 System.out.print("Appointment location: ");
                 String location = scanner.nextLine();
 
-                timeAndLocation.setDetails(time, location, date);
+                timeAndLocation.setTimeSlot(time);
+                timeAndLocation.setLocation(location);
+                timeAndLocation.setDate(date);
 
                 user.setUserDetails(name, age, timeAndLocation);
                 user.setAppointment();

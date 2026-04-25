@@ -9,8 +9,11 @@ public class Self implements User {
     private TimeAndLocation timeAndLocation;
     private Vaccine vaccine;
 
-    public Self(TimeAndLocation timeAndLocation, Vaccine vaccine) {
+    public void setTimeAndLocation(TimeAndLocation timeAndLocation) {
         this.timeAndLocation = timeAndLocation;
+    }
+
+    public void setVaccine(Vaccine vaccine) {
         this.vaccine = vaccine;
     }
 
