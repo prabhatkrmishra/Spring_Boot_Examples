@@ -6,9 +6,15 @@ public class TimeAndLocation {
     private String location;
     private String date;
 
-    public void setDetails(String timeSlot, String location, String date) {
+    public void setTimeSlot(String timeSlot) {
         this.timeSlot = timeSlot;
+    }
+
+    public void setLocation(String location) {
         this.location = location;
+    }
+
+    public void setDate(String date) {
         this.date = date;
     }
 

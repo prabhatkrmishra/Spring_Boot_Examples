@@ -10,7 +10,7 @@ public class Self implements User {
 
     private Plan plan;
 
-    public Self(Plan plan) {
+    public void setPlan(Plan plan) {
         this.plan = plan;
     }
 

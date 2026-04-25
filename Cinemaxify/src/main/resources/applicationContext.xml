@@ -10,20 +10,20 @@
 
     <!-- Self -->
     <bean id="selfNormal" class="com.example.Cinemaxify.Self">
-        <constructor-arg ref="normalPlan"/>
+        <property name="plan" ref="normalPlan"/>
     </bean>
 
     <bean id="selfPremium" class="com.example.Cinemaxify.Self">
-        <constructor-arg ref="premiumPlan"/>
+        <property name="plan" ref="premiumPlan"/>
     </bean>
 
     <!-- Spouse -->
     <bean id="spouseNormal" class="com.example.Cinemaxify.Spouse">
-        <constructor-arg ref="normalPlan"/>
+        <property name="plan" ref="normalPlan"/>
     </bean>
 
     <bean id="spousePremium" class="com.example.Cinemaxify.Spouse">
-        <constructor-arg ref="premiumPlan"/>
+        <property name="plan" ref="premiumPlan"/>
     </bean>
 
 </beans>

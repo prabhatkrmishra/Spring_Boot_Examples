@@ -10,7 +10,7 @@ public class Spouse implements User {
 
     private Plan plan;
 
-    public Spouse(Plan plan) {
+    public void setPlan(Plan plan) {
         this.plan = plan;
     }
 
