@@ -15,8 +15,7 @@ public class BankAccountRegistrationApplication {
     public static void main(String[] args) {
 
         ConfigurableApplicationContext context = SpringApplication.run(
-                BankAccountRegistrationApplication.class,
-                new String[]{"--spring.main.web-application-type=none"}
+                BankAccountRegistrationApplication.class, args
         );
 
         Scanner scanner = new Scanner(System.in);
@@ -29,44 +28,43 @@ public class BankAccountRegistrationApplication {
         user.setUserDetails(name);
 
         System.out.println("Do you want to add account");
-        System.out.println("1. Yes\n2. No");
+        System.out.println("1. Yes");
+        System.out.println("2. No");
 
         int choice = scanner.nextInt();
 
-        if (choice != 1) {
-            System.out.println("Application ends");
-            context.close(); // important
-            return;
-        }
+        if (choice == 1) {
+            boolean addMore = true;
 
-        boolean addMore = true;
+            while (addMore) {
 
-        while (addMore) {
+                System.out.println("Please select the account type");
+                System.out.println("1. Current");
+                System.out.println("2. Savings");
 
-            System.out.println("Please select the account type");
-            System.out.println("1. Current\n2. Savings");
+                int type = scanner.nextInt();
 
-            int type = scanner.nextInt();
+                Account account;
 
-            Account account;
+                if (type == 1) {
+                    account = (Account) context.getBean("currentAccount");
+                } else {
+                    account = (Account) context.getBean("savingsAccount");
+                }
 
-            if (type == 1) {
-                account = (Account) context.getBean("currentAccount");
-            } else {
-                account = (Account) context.getBean("savingsAccount");
+                System.out.println("Enter the opening balance");
+                double balance = scanner.nextDouble();
+
+                account.addBalance(balance);
+                user.addAccount(account);
+
+                System.out.println("Do you want to add more accounts");
+                System.out.println("1. Yes");
+                System.out.println("2. No");
+
+                int more = scanner.nextInt();
+                addMore = (more == 1);
             }
-
-            System.out.println("Enter the opening balance");
-            double balance = scanner.nextDouble();
-
-            account.addBalance(balance);
-            user.addAccount(account);
-
-            System.out.println("Do you want to add more accounts");
-            System.out.println("1. Yes\n2. No");
-
-            int more = scanner.nextInt();
-            addMore = (more == 1);
         }
 
         System.out.println("Hi " + user.getName() + ", here is the list of your accounts:");
@@ -81,7 +79,6 @@ public class BankAccountRegistrationApplication {
             );
         }
 
-        // CRITICAL: triggers destroy()
         context.close();
     }
 }
