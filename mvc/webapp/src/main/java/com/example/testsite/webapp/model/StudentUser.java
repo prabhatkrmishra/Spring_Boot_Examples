@@ -1,10 +1,12 @@
-package com.example.testsite.webapp.domain;
+package com.example.testsite.webapp.model;
 
 import com.example.testsite.webapp.repository.StudentUserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component
+@Scope("prototype")
 public class StudentUser implements User{
 
     @Autowired
@@ -14,6 +16,7 @@ public class StudentUser implements User{
     String gender;
     String location;
     String college;
+    int id;
 
     public int getId() {
         return id;
@@ -22,8 +25,6 @@ public class StudentUser implements User{
     public void setId(int id) {
         this.id = id;
     }
-
-    int id;
 
     public String getName() {
         return name;

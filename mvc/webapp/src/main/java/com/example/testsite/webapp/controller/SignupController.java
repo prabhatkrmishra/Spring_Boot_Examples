@@ -1,13 +1,15 @@
-package com.example.testsite.webapp.web;
+package com.example.testsite.webapp.controller;
 
-import com.example.testsite.webapp.domain.StudentUser;
-import com.example.testsite.webapp.domain.User;
+import com.example.testsite.webapp.model.StudentUser;
+import com.example.testsite.webapp.model.User;
 import com.example.testsite.webapp.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SignupController {
@@ -21,11 +23,20 @@ public class SignupController {
         return "signup";
     }
 
-    @RequestMapping("/registerUser")
+    @RequestMapping("/register")
     public String createUser(@ModelAttribute(value = "user") StudentUser user) {
-        if (userService.signUp(user.getName(), user.getGender(), user.getLocation(), user.getCollege()))
-            return "registrationSuccess";
+
+        int id = userService.signUp(user.getName(), user.getGender(), user.getLocation(), user.getCollege());
+        if (id > -1) {
+            return "redirect:/success?id=" + id;
+        }
 
         return "signup";
+    }
+
+    @RequestMapping("/success")
+    public String showRegistered(@RequestParam("id") String id, ModelMap modelMap) {
+        modelMap.addAttribute("id", Integer.parseInt(id));
+        return "success";
     }
 }

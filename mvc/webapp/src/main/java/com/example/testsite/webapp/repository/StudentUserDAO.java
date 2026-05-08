@@ -1,6 +1,6 @@
 package com.example.testsite.webapp.repository;
 
-import com.example.testsite.webapp.domain.StudentUser;
+import com.example.testsite.webapp.model.StudentUser;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
@@ -20,7 +20,8 @@ public class StudentUserDAO implements DataAccessObject<StudentUser> {
 
     @Override
     public Optional<StudentUser> getUser(Integer id) {
-        if(studentUserList.isEmpty()){
+
+        if(id < 0 || id >= studentUserList.size()){
             return Optional.empty();
         }
 

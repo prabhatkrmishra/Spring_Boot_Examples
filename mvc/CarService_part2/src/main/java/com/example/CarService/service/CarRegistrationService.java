@@ -11,9 +11,15 @@ public class CarRegistrationService implements Registration {
     Vehicle car;
 
     @Override
-    public Boolean registerCar(String vehicleNo, String vehicleName, String CarDetails, String CarWork) {
+    public Integer registerCar(String vehicleNo,
+                               String vehicleName,
+                               String CarDetails,
+                               String CarWork) {
 
-        car.createVehicle(vehicleNo, vehicleName, CarDetails, CarWork);
+        car.createVehicle(vehicleNo,
+                vehicleName,
+                CarDetails,
+                CarWork);
 
         return car.saveVehicleDetails();
     }

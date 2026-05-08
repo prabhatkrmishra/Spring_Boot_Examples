@@ -1,6 +1,7 @@
 package com.example.CarService.Controller;
 
 import com.example.CarService.domain.Car;
+import com.example.CarService.domain.Vehicle;
 import com.example.CarService.service.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,15 +18,17 @@ public class RegisterController {
     Registration registration;
 
     @RequestMapping("/register")
-    public String getRegistrationPage(Model model){
+    public String getRegistrationPage(Model carModel){
 
-        model.addAttribute("car", registration.getNewCar());
+        Vehicle vehicle = registration.getNewCar();
+
+        carModel.addAttribute("vehicle", vehicle);
 
         return "carregister";
     }
 
     @RequestMapping("/done")
-    public ModelAndView getResponsePage(@ModelAttribute("car") Car car){
+    public ModelAndView getResponsePage(@ModelAttribute("vehicle") Car car){
 
         ModelAndView mav = new ModelAndView();
 
@@ -36,9 +39,9 @@ public class RegisterController {
                 car.getCarWork()
         );
 
-        if(id > -1){
+        if(id != -1){
 
-            mav.setViewName("redirect:/success?id=" + id);
+            mav.setViewName("redirect:success?id=" + id);
 
             return mav;
         }
@@ -48,9 +51,9 @@ public class RegisterController {
         return mav;
     }
 
-    @RequestMapping("/success")
+    @RequestMapping(value="/success")
     public String getSuccessPage(@RequestParam("id") String id,
-                                 Model model){
+                                 Model model) {
 
         model.addAttribute("id", id);
 

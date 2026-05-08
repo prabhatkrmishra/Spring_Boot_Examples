@@ -1,20 +1,21 @@
 package com.example.CarService.domain;
 
-import com.example.CarService.repository.CarDAO;
+import com.example.CarService.repository.DAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class Car implements Vehicle {
 
+    @Autowired
+    DAO<Car> carDAO;
+
     String RegisterationNumber;
     String CarName;
     String CarDetails;
     String CarWork;
-    Integer CarId;
 
-    @Autowired
-    CarDAO carDAO;
+    Integer CarId;
 
     public Integer getCarId() {
         return CarId;
@@ -57,13 +58,22 @@ public class Car implements Vehicle {
     }
 
     @Override
-    public Integer saveVehicleDetails() {
+    public int saveVehicleDetails() {
 
-        int id = carDAO.save(this);
+        if(RegisterationNumber != null
+                && CarName != null
+                && CarDetails != null){
 
-        if(id > -1){
-            this.CarId = id;
-            return id;
+            int carId = carDAO.save(this);
+
+            System.out.println(
+                    "new car added "
+                            + this.CarName + " "
+                            + this.RegisterationNumber
+                            + this.CarDetails
+            );
+
+            return carId;
         }
 
         return -1;
@@ -73,7 +83,7 @@ public class Car implements Vehicle {
     public void createVehicle(String RegistrationNumber,
                               String CarName,
                               String CarDetails,
-                              String CarWork) {
+                              String CarWork ) {
 
         this.setRegisterationNumber(RegistrationNumber);
         this.setCarName(CarName);
