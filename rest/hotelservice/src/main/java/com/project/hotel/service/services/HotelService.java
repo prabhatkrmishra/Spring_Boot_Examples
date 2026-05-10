@@ -1,6 +1,7 @@
 package com.project.hotel.service.services;
 
 import com.project.hotel.service.models.Hotel;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /*
@@ -19,6 +20,10 @@ import java.util.*;
 public class HotelService {
     private final List<Hotel> hotelList = new ArrayList<>();
     private final Map<Integer, Hotel> hotelMap = new HashMap<>();
+    public int fetchId = 1;
+
+    @Autowired
+    private OwnerService ownerService;
 
     public List<Hotel> getHotelList() {
         return hotelList;
@@ -29,8 +34,9 @@ public class HotelService {
     }
 
     public void registerNewHotel(Hotel hotel) {
+        hotel.printDetails();
+        hotel.setOwner(ownerService.addOwnerDetails(fetchId++));
         hotelList.add(hotel);
-        System.out.println(hotel.getHotelId() + " | " + hotel.getHotelName() + " | " + hotel.getHotelCity() + " | " + hotel.getHotelDescription() + " | " + hotel.getHotelRating());
         hotelMap.put(hotel.getHotelId(), hotel);
     }
 
