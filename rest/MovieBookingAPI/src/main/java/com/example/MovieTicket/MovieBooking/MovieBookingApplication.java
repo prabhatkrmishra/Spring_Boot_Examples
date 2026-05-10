@@ -1,11 +1,11 @@
-package com.project.hotel.service;
+package com.example.MovieTicket.MovieBooking;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ServiceApplication {
+public class MovieBookingApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(ServiceApplication.class, args);
+		SpringApplication.run(MovieBookingApplication.class, args);
 	}
 }

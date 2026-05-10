@@ -1,11 +1,13 @@
-package com.project.hotel.service;
+package railway.com.example.RailwayAndMeal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ServiceApplication {
+public class RailwayAndMealApplication {
+
 	public static void main(String[] args) {
-		SpringApplication.run(ServiceApplication.class, args);
+		SpringApplication.run(RailwayAndMealApplication.class, args);
 	}
+
 }
