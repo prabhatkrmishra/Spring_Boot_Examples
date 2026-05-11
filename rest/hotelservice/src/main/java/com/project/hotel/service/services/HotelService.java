@@ -1,6 +1,8 @@
 package com.project.hotel.service.services;
 
+import com.project.hotel.service.exceptions.HotelIdAlreadyExist;
 import com.project.hotel.service.models.Hotel;
+import com.project.hotel.service.models.Owner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Service;
  *  controller → only handles success path
  */
 
-import com.project.hotel.service.exceptions.HotelNotFoundException;
+import com.project.hotel.service.exceptions.HotelNotFound;
 
 import java.util.*;
 
@@ -34,8 +36,16 @@ public class HotelService {
     }
 
     public void registerNewHotel(Hotel hotel) {
+        if (hotelMap.containsKey(hotel.getHotelId())) {
+            throw new HotelIdAlreadyExist("Hotel with id: " + hotel.getHotelId() + " already exist");
+        }
+
         hotel.printDetails();
-        hotel.setOwner(ownerService.addOwnerDetails(fetchId++));
+
+        Owner nowner = ownerService.addOwnerDetails(hotel.getOwner());
+        nowner.setId(fetchId++);
+        hotel.setOwner(nowner);
+
         hotelList.add(hotel);
         hotelMap.put(hotel.getHotelId(), hotel);
     }
@@ -43,7 +53,7 @@ public class HotelService {
     public Hotel getHotelById(Integer id) {
 
         if (!hotelMap.containsKey(id)) {
-            throw new HotelNotFoundException("Hotel with id: " + id + " not found");
+            throw new HotelNotFound("Hotel with id: " + id + " not found");
         }
 
         return hotelMap.get(id);
@@ -56,13 +66,18 @@ public class HotelService {
     public void updateHotelDetails(Integer id, Hotel updatedHotel) {
 
         if (!hotelMap.containsKey(id)) {
-            throw new HotelNotFoundException("Hotel with id: " + id + " not found");
+            throw new HotelNotFound("Hotel with id: " + id + " not found");
         }
 
         Hotel oldHotel = hotelMap.get(id);
         int index = hotelList.indexOf(oldHotel);
 
         updatedHotel.setHotelId(id);
+        int OwnerId = oldHotel.getOwner().getId();
+        Owner updatedOwner = ownerService.updateOwner(updatedHotel.getOwner(), OwnerId);
+        updatedOwner.setId(OwnerId);
+        updatedHotel.setOwner(updatedOwner);
+        updatedHotel.getOwner().printDetails();
 
         hotelList.set(index, updatedHotel);
         hotelMap.put(id, updatedHotel);
@@ -73,7 +88,7 @@ public class HotelService {
     public void updateHotelDetails(Integer id, Hotel updatedHotel) {
 
         if (!hotelMap.containsKey(id)) {
-            throw new HotelNotFoundException("Hotel with id: " + id + " not found");
+            throw new HotelNotFound("Hotel with id: " + id + " not found");
         }
 
         Hotel existingHotel = hotelMap.get(id);
@@ -87,8 +102,10 @@ public class HotelService {
     public void deRegisterExistingHotel(Integer id) {
 
         if (!hotelMap.containsKey(id)) {
-            throw new HotelNotFoundException("Hotel with id: " + id + " not found");
+            throw new HotelNotFound("Hotel with id: " + id + " not found");
         }
+
+        ownerService.deleteOwner(hotelMap.get(id).getOwner().getId());
 
         hotelList.remove(hotelMap.get(id));
         hotelMap.remove(id);

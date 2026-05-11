@@ -14,6 +14,8 @@ public interface MovieServiceInterface {
 
     void deleteMovieById(String id);
 
+    void deleteMovie(String id);
+
     void updateMovie(Movie movie, String id);
 
 }

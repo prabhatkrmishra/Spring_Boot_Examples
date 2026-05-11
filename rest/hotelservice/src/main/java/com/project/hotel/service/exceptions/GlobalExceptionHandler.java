@@ -11,10 +11,16 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(HotelNotFoundException.class)
-    // "HotelNotFoundException ex" contains thrown exception object.
-    public ResponseEntity<String> handleHotelNotFoundException(HotelNotFoundException ex) {
+    @ExceptionHandler(HotelNotFound.class)
+    // "HotelNotFound ex" contains thrown exception object.
+    public ResponseEntity<String> handleHotelNotFoundException(HotelNotFound ex) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler(HotelIdAlreadyExist.class)
+    public ResponseEntity<String> handleHotelIdAlreadyExistException(HotelIdAlreadyExist ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ex.getMessage());
     }
 
@@ -47,5 +53,11 @@ public class GlobalExceptionHandler {
         });
 
         return ResponseEntity.badRequest().body(errors);
+    }
+
+    @ExceptionHandler(ServerNotFound.class)
+    public ResponseEntity<String> handleServerNotFoundException(ServerNotFound ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
     }
 }

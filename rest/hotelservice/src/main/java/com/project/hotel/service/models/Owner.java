@@ -5,10 +5,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class Owner {
 
-    private Integer id;
+    private Integer id = 0;
     private String firstName;
     private String lastName;
     private Integer age;
+    private String gender;
     private String phone;
 
     public Integer getId() {
@@ -51,7 +52,15 @@ public class Owner {
         this.age = age;
     }
 
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
     public void printDetails() {
-        System.out.println(id + " | " + firstName + " | " + lastName + " | " + age + " | " + phone);
+        System.out.println(id + " | " + firstName + " | " + lastName + " | " + age + " | " + gender + " | " + phone);
     }
 }
