@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: application
+  datasource:
+    url: jdbc:Mysql://127.0.0.1:3306/students
+    username: root
+    password: spring@
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        hbm2ddl:
+          auto: update
+
+server:
+  port: 8090
