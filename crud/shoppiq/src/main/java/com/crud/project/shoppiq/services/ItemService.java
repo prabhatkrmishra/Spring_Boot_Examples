@@ -1,7 +1,7 @@
-package com.crud.project.cnkart.services;
+package com.crud.project.shoppiq.services;
 
-import com.crud.project.cnkart.models.Item;
-import com.crud.project.cnkart.repositories.ItemRepository;
+import com.crud.project.shoppiq.models.Item;
+import com.crud.project.shoppiq.repositories.ItemRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

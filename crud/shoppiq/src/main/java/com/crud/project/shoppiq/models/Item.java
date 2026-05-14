@@ -1,4 +1,4 @@
-package com.crud.project.cnkart.models;
+package com.crud.project.shoppiq.models;
 
 import jakarta.persistence.*;
 

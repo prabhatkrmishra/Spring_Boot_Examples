@@ -1,10 +1,10 @@
-package com.crud.project.cnkart;
+package com.crud.project.shoppiq;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CnkartApplicationTests {
+class ShoppiqApplicationTests {
 
 	@Test
 	void contextLoads() {

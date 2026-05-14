@@ -1,4 +1,4 @@
-package com.crud.project.cnkart.exceptions;
+package com.crud.project.shoppiq.exceptions;
 
 public class ItemNotFoundException extends RuntimeException {
     public ItemNotFoundException(String message) {

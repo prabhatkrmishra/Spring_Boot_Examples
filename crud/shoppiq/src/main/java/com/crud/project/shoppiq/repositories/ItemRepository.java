@@ -1,7 +1,7 @@
-package com.crud.project.cnkart.repositories;
+package com.crud.project.shoppiq.repositories;
 
-import com.crud.project.cnkart.exceptions.ItemNotFoundException;
-import com.crud.project.cnkart.models.Item;
+import com.crud.project.shoppiq.exceptions.ItemNotFoundException;
+import com.crud.project.shoppiq.models.Item;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;

@@ -1,4 +1,4 @@
-package com.crud.project.cnkart.exceptions;
+package com.crud.project.shoppiq.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

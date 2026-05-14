@@ -1,4 +1,4 @@
-package com.crud.project.cnkart.repositories;
+package com.crud.project.shoppiq.repositories;
 
 import java.util.List;
 import java.util.Optional;

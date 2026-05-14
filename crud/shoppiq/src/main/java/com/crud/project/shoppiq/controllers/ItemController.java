@@ -1,7 +1,7 @@
-package com.crud.project.cnkart.controllers;
+package com.crud.project.shoppiq.controllers;
 
-import com.crud.project.cnkart.models.Item;
-import com.crud.project.cnkart.services.ItemService;
+import com.crud.project.shoppiq.models.Item;
+import com.crud.project.shoppiq.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
