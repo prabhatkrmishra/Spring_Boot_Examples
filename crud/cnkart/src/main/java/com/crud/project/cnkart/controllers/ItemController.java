@@ -4,10 +4,9 @@ import com.crud.project.cnkart.models.Item;
 import com.crud.project.cnkart.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/item")
@@ -16,11 +15,27 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-    @GetMapping("/id/{id}")
-    public ResponseEntity<Item> getItemById(@PathVariable int id){
-        Item item = itemService.getItemById(id);
+    @PostMapping("/create")
+    public ResponseEntity<Optional<Item>> saveItem(@RequestBody Item newItem) {
+        Optional<Item> item = itemService.saveNewItem(newItem);
         return ResponseEntity.ok(item);
     }
 
+    @GetMapping("/id/{id}")
+    public ResponseEntity<Optional<Item>> getItemById(@PathVariable int id) {
+        Optional<Item> item = itemService.getItemById(id);
+        return ResponseEntity.ok(item);
+    }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteItem(@PathVariable int id) {
+        itemService.deleteItemById(id);
+        return ResponseEntity.ok("Deleted");
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Optional<Item>> updateItem(@PathVariable int id, @RequestBody Item newItem) {
+        Optional<Item> item = itemService.updateItemById(id, newItem);
+        return ResponseEntity.ok(item);
+    }
 }

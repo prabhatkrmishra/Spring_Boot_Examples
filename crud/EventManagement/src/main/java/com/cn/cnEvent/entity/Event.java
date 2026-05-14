@@ -1,25 +1,34 @@
-package com.crud.project.cnkart.models;
+package com.cn.cnEvent.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
-@Table(name = "items")
-public class Item {
+@Table(name = "events")
+public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
     private Long id;
-    @Column
+
+    @Column(name = "name", nullable = false)
     private String name;
-    @Column
+
+    @Column(name = "description", nullable = false)
     private String description;
 
-    public void setId(Long id) {
-        this.id = id;
+    public Event() {
+    }
+
+    public Event(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -36,10 +45,5 @@ public class Item {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public void update(Item newItem) {
-        this.name = newItem.getName();
-        this.description = newItem.getDescription();
     }
 }

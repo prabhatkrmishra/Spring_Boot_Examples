@@ -1,8 +1,8 @@
 package com.crud.project.cnkart.services;
 
-import com.crud.project.cnkart.exceptions.ItemNotFoundException;
 import com.crud.project.cnkart.models.Item;
 import com.crud.project.cnkart.repositories.ItemRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +14,23 @@ public class ItemService {
     @Autowired
     private ItemRepository itemRepository;
 
-    public Item getItemById(int id) {
+    @Transactional
+    public Optional<Item> saveNewItem(Item newItem) {
+        return Optional.ofNullable(itemRepository.save(newItem));
+    }
 
-        Optional<Item> optionalItem =
-                itemRepository.findById(id);
+    @Transactional
+    public Optional<Item> getItemById(int id) {
+        return itemRepository.findById(id);
+    }
 
-        if(optionalItem.isPresent()) {
-            return optionalItem.get();
-        }
+    @Transactional
+    public void deleteItemById(int id) {
+        itemRepository.deleteById(id);
+    }
 
-        throw new ItemNotFoundException("Item with id: " + id + " not found");
+    @Transactional
+    public Optional<Item> updateItemById(int id, Item newItem) {
+        return itemRepository.updateById(id, newItem);
     }
 }
