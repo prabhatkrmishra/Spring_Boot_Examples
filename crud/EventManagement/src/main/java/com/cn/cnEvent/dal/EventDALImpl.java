@@ -1,62 +1,133 @@
 package com.cn.cnEvent.dal;
 
 import com.cn.cnEvent.entity.Event;
-import com.cn.cnEvent.repository.EventRepository;
+import com.cn.cnEvent.entity.EventScheduleDetail;
+import com.cn.cnEvent.entity.Ticket;
+import com.cn.cnEvent.exception.NotFoundException;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class EventDALImpl implements EventDAL {
 
     @Autowired
-    private EventRepository eventRepository;
+    EntityManager entityManager;
 
     @Override
     public Event getById(Long id) {
-        Optional<Event> event = eventRepository.findById(id);
-        return event.orElse(null);
+        Session session = entityManager.unwrap(Session.class);
+        Event event = session.get(Event.class, id);
+        return event;
     }
 
     @Override
     public List<Event> getAllEvents() {
-        return eventRepository.findAll();
+        Session session = entityManager.unwrap(Session.class);
+        List<Event> allEvents = session.createQuery(
+                "SELECT e FROM Event e", Event.class).getResultList();
+        return allEvents;
+    }
+
+    @Override
+    public List<Event> getAllEventsByLocation(String location) {
+        List<Event> allEvents = getAllEvents();
+
+        List<Event> eventsByLocation = new ArrayList<>();
+        try {
+            for (Event event : allEvents) {
+                if (event.getEventScheduleDetail().getLocation().equalsIgnoreCase(location)) {
+                    eventsByLocation.add(event);
+                }
+            }
+        } catch (Exception e) {
+            throw new NotFoundException("ScheduleDetail of a event is not present");
+        }
+        return eventsByLocation;
+    }
+
+    @Override
+    public EventScheduleDetail getEventScheduleDetailByEventId(Long id) {
+        Session session = entityManager.unwrap(Session.class);
+        Event event = session.get(Event.class, id);
+        return event.getEventScheduleDetail();
+    }
+
+    @Override
+    public List<Ticket> getAllTicketsOfEvent(Long id) {
+        Event event = getById(id);
+        return event.getTickets();
+    }
+
+    @Override
+    public List<Event> getAllEventsHavingTicketPriceGreaterThan(Long price) {
+        List<Event> allEvents = getAllEvents();
+        List<Event> eventsByPrice = new ArrayList<>();
+        try {
+            for (Event event : allEvents) {
+                for (Ticket ticket : event.getTickets()) {
+                    if (ticket.getPrice() > 1000) {
+                        eventsByPrice.add(event);
+                        break;
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new NotFoundException("Tickets not present for the event");
+        }
+        return eventsByPrice;
     }
 
     @Override
     public String save(Event event) {
-        eventRepository.save(event);
+        Session session = entityManager.unwrap(Session.class);
+        session.save(event);
         return "The event was saved successfully.";
     }
 
     @Override
     public String delete(Long id) {
-        if (eventRepository.existsById(id)) {
-            eventRepository.deleteById(id);
-            return "The event was deleted successfully";
+        Session session = entityManager.unwrap(Session.class);
+        Event event = session.get(Event.class, id);
+        session.delete(event);
+        return "The event was deleted successfully";
+    }
+
+    @Override
+    public String deleteEventScheduleDetail(Long id) {
+        Session session = entityManager.unwrap(Session.class);
+        try {
+            EventScheduleDetail eventScheduleDetail = session.createQuery(
+                            "SELECT e FROM EventScheduleDetail e WHERE e.id = :id", EventScheduleDetail.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+
+            for (Event event : getAllEvents()) {
+                if (event.getEventScheduleDetail() != null && event.getEventScheduleDetail().getId().equals(id)) {
+                    event.setEventScheduleDetail(null);
+                    save(event);
+                }
+            }
+            session.delete(eventScheduleDetail);
+            return "The eventSchedule was deleted successfully";
+        } catch (NoResultException ex) {
+            return "EventScheduleDetail with id " + id + " does not exist";
         }
-        return "Event with id " + id + " not found";
     }
 
     @Override
     public String update(Event updateEvent) {
-        Optional<Event> existingEventOpt = eventRepository.findById(updateEvent.getId());
-
-        if (existingEventOpt.isPresent()) {
-            Event existingEvent = existingEventOpt.get();
-
-            if (updateEvent.getName() != null) {
-                existingEvent.setName(updateEvent.getName());
-            }
-            if (updateEvent.getDescription() != null) {
-                existingEvent.setDescription(updateEvent.getDescription());
-            }
-
-            eventRepository.save(existingEvent);
-            return "Event is updated successfully";
-        }
-
-        return "Event with id " + updateEvent.getId() + " not found";
+        Session session = entityManager.unwrap(Session.class);
+        Event currentEvent = session.get(Event.class, updateEvent.getId());
+        currentEvent.setName(updateEvent.getName());
+        currentEvent.setDescription(updateEvent.getDescription());
+        session.update(currentEvent);
+        return "Event is updated successfully";
     }
+
 }
