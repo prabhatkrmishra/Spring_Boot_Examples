@@ -14,11 +14,11 @@ public class ExpenseController {
 
     @PostMapping("/save/{userId}")
     public Expense saveExpense(@PathVariable Long userId, @RequestBody Expense expense) {
-        
+        return expenseService.saveExpense(userId, expense);
     }
 
     @GetMapping("/{expenseId}")
     public Expense getExpense(@PathVariable Long expenseId) {
-        
+        return expenseService.getExpenseById(expenseId);
     }
 }

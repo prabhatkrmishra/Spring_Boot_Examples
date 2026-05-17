@@ -8,30 +8,24 @@ import java.util.List;
 @Table(name = "users")
 public class User {
 
-    // define the attribute    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public boolean isIsbudgetSet() {
-        return isbudgetSet;
-    }
+    private String username;
+    private String nickname;
+    private String email;
+    private String address;
+    private double budget;
+    private boolean isbudgetSet = false;
 
-    public void setIsbudgetSet(boolean isbudgetSet) {
-        this.isbudgetSet = isbudgetSet;
-    }
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Expense> expenses = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Income> incomes = new ArrayList<>();
 
-    public List<Expense> getExpenses() {
-        return expenses;
-    }
-
-    public void setExpenses(List<Expense> expenses) {
-        this.expenses = expenses;
-    }
-
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -72,19 +66,35 @@ public class User {
         this.address = address;
     }
 
-    public List<Income> getIncomes() {
-        return incomes;
-    }
-
-    public void setIncomes(List<Income> incomes) {
-        this.incomes = incomes;
-    }
-
     public double getBudget() {
         return budget;
     }
 
     public void setBudget(double budget) {
         this.budget = budget;
+    }
+
+    public boolean isIsbudgetSet() {
+        return isbudgetSet;
+    }
+
+    public void setIsbudgetSet(boolean isbudgetSet) {
+        this.isbudgetSet = isbudgetSet;
+    }
+
+    public List<Expense> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<Expense> expenses) {
+        this.expenses = expenses;
+    }
+
+    public List<Income> getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(List<Income> incomes) {
+        this.incomes = incomes;
     }
 }

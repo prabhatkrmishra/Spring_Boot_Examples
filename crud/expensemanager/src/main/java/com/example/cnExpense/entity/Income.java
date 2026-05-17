@@ -1,7 +1,6 @@
 package com.example.cnExpense.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -9,16 +8,21 @@ import java.time.LocalDate;
 @Table(name = "income")
 public class Income {
 
-    // define the attribute
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public LocalDate getDate() {
-        return date;
-    }
+    private double amount;
+    private LocalDate date;
+    private String description;
+    private String incomeType;
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -35,6 +39,14 @@ public class Income {
         this.amount = amount;
     }
 
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -43,19 +55,19 @@ public class Income {
         this.description = description;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public String getIncomeType() {
         return incomeType;
     }
 
     public void setIncomeType(String incomeType) {
         this.incomeType = incomeType;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

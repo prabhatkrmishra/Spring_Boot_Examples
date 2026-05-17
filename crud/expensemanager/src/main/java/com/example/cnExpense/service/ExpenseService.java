@@ -15,11 +15,11 @@ public class ExpenseService {
 
     @Transactional
     public Expense saveExpense(Long userId, Expense expense) {
-      
+        return expenseDal.saveExpense(userId, expense);
     }
 
     @Transactional
     public Expense getExpenseById(Long expenseId) {
-        
+        return expenseDal.getExpenseById(expenseId);
     }
 }
