@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: test
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/products
+    username: root
+    password: spring@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  session:
+    jdbc:
+      table-name: SPRING_SESSION
+      initialize-schema: always
+
+server:
+  port: 8081
+
+kind: Application
