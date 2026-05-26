@@ -1,7 +1,9 @@
 package com.project.hotel.service.models;
 
 import jakarta.validation.constraints.*;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor
 public class Hotel {
     private Integer hotelId;
 
