@@ -19,10 +19,21 @@ public class GymSecurityConfig {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/user/register").permitAll()
+                .antMatchers("/user/register", "/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic();
+                .formLogin()
+                .loginPage("/login")
+                .defaultSuccessUrl("/user/all", true)
+                .permitAll()
+                .and()
+                .rememberMe()
+                .key("uniqueAndSecret")
+                .tokenValiditySeconds(86400)
+                .and()
+                .logout()
+                .logoutSuccessUrl("/login?logout")
+                .permitAll();
         return http.build();
     }
 
