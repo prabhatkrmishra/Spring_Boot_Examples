@@ -5,10 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class TaxRecordDto {
-    private String taxYear;
-    private int income;
-    private int deductions;
+@NoArgsConstructor
+public class UserDto {
+
+	private String username;
+	private String password;
+	private int age;
+	private String role;
+
 }

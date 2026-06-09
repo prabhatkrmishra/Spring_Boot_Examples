@@ -17,13 +17,13 @@ spring:
       client:
         registration:
           keycloak:
-            client-id: 
-            client-secret: 
+            client-id:
+            client-secret:
             scope: openid+profile+email
             authorization-grant-type: authorization_code
           google:
-            client-id: 
-            client-secret: 
+            client-id:
+            client-secret:
             scope: openid+profile+email
         provider:
           keycloak:

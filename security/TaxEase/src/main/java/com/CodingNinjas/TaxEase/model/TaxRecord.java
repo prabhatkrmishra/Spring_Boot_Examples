@@ -1,24 +1,26 @@
-package com.CodingNinjas.TaxEase.model;
+package com.codingNinjas.taxEase.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tax_records")
+@Getter
+@Setter
+@Builder
 public class TaxRecord {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String userName;
+    @ManyToOne // Many TaxRecords can belong to one User
+    @JoinColumn(name = "user_id") // Foreign key column in TaxRecord table
+    @JsonIgnoreProperties("taxRecords")
+    private User user;
     private String taxYear;
-    private int Income;
+    private int income;
     private int deductions;
-    private boolean filingApproved;
+    private boolean isFilingApproved;
 }
