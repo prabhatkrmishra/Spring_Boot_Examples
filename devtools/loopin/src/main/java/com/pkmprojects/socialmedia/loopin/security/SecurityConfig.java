@@ -67,6 +67,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints — no authentication required
                         .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/metrics/**").permitAll()
 
                         // Admin-only endpoints
                         .requestMatchers("/admin/**").hasRole("ADMIN")

@@ -40,5 +40,12 @@ info: # Set info for the app
     name: Loopin
     version: 0.0.1
 
+
 server:
   port: 8090
+
+logging:
+  file:
+    name: logs.log
+  level:
+    com.pkmprojects.socialmedia.loopin: DEBUG
