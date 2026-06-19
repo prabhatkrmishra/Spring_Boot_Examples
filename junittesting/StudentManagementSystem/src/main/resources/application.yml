@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: StudentManagementSystem
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/studentdb_schema
+    username: root
+    password: spring@
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true # Print generated SQL to the console
+    properties:
+      hibernate:
+        format_sql: true # Pretty-print the SQL statements
+        dialect: org.hibernate.dialect.MySQLDialect
+server:
+  port: 8089
